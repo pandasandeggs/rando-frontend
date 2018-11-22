@@ -30,3 +30,43 @@
     transform: rotate(360deg);
   }
 }
+
+/* makes it work with an iPhone screen */
+ @media (max-width: 700px) {
+    /* PUT CSS HERE TO ALTER WEBSITE TO SINGLE COLUMN */
+ }
+
+ html {
+ 	background: linear-gradient(yellow, orange, blue);
+ 	background-size: cover;
+ 	min-height: 100%;
+ }
+
+ body {
+ 	font-family: Georgia, Arial, sans-serif;
+ 	padding:20px;
+  text-align: center;
+ }
+
+ h1, h2, p {
+   color: black;
+   text-align: center;
+   font-weight: bold;
+ }
+
+ img {
+   box-shadow: 2px 5px 5px #333;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   width: auto;
+   /* center image and make it move with the page */
+ }
+
+ .button_style {
+   border-color: black;
+   background-color: white;
+   border-radius: 4px;
+   margin:auto;
+   display: block;
+ }
