@@ -4,7 +4,6 @@ import '../App.css';
 class Home extends Component {
 
   state = {
-    isLoading: this.props ? false : true,
     currentUser: this.props.currentUser
   }
 
@@ -18,7 +17,6 @@ class Home extends Component {
 
   render() {
     return (
-    this.state.isLoading ? "Welcome to Rando!" :
     <div>
       <h1>Hello { this.state.currentUser.name }!</h1>
       <h3>I'm Rando! I'm here to help!</h3>

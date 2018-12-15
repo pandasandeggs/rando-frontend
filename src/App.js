@@ -17,10 +17,11 @@ class App extends Component {
       activities: [],
       friends: [],
       showSignup: localStorage.token ? false : true,
-      showLogin: false,
+      showLogin: localStorage.token ? false : true,
       showHome: localStorage.token ? true : false,
       showRestaurantPage: false,
-      showActivityPage: false
+      showActivityPage: false,
+      currentRestaurant: null
     }
   }
 
@@ -102,16 +103,38 @@ class App extends Component {
       })
   }
 
+/* Grabs a random restaurant for the user from their list of restaurants */
   getRandomRestaurant = () => {
-
+    console.log("I hit the get random restaurant function")
+    const token = localStorage.token
+    if(token){
+      fetch('http://localhost:3000/api/v1/restaurants/random', {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      }).then(resp => resp.json())
+        .then(data => {
+          if(!data.error){
+            this.setState({
+              currentRestaurant: data,
+              showRestaurantPage: true,
+              showHome: false
+            })
+          }
+        })
+    } else {
+      console.log("Need to login.")
+    }
   }
 
   getRandomActivity = () => {
 
   }
-
+/* Directs user to the correct page */
   currentPage = () => {
-    const { currentUser, restaurants, activities, friends, showSignup, showLogin, showHome, showRestaurantPage, showActivityPage } = this.state;
+    const { currentUser, restaurants, activities, friends, showSignup, showLogin, showHome, showRestaurantPage, showActivityPage, currentRestaurant } = this.state;
     if(showSignup === true){
       return <Signup currentUser={currentUser} signup={this.signup} getLogin={this.getLogin}/>
     } else if(showLogin === true){
@@ -119,7 +142,7 @@ class App extends Component {
     } else if(showHome === true){
       return <Home currentUser={currentUser} randomRestaurant={this.getRandomRestaurant} randomActivity={this.getRandomActivity}/>
     } else if(showRestaurantPage === true){
-      return <RandomRestaurantPage currentUser={currentUser} restaurants={restaurants}/>
+      return <RandomRestaurantPage currentUser={currentUser} restaurants={restaurants} currentRestaurant={currentRestaurant}/>
     } else if(showActivityPage === true){
       return <RandomActivityPage currentUser={currentUser} activities={activities}/>
     }
