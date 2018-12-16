@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
+import NavBar from './NavBar'
 
 class Home extends Component {
 
@@ -15,6 +16,10 @@ class Home extends Component {
     this.props.randomActivity()
   }
 
+  handleRestaurantClick = () => {
+    this.props.restaurantList()
+  }
+
   render() {
     return (
     <div>
@@ -23,8 +28,11 @@ class Home extends Component {
       <img src="https://pbs.twimg.com/profile_images/378800000099889392/c47f40d0fb1549ed31443ebef54f31e8_400x400.png" height="200" width="200" alt="Bark Bark"></img>
       <p>How are you?</p>
       <div>
-        <button onClick={ () => this.handleHungryClick()}>I'm hungry</button>
-        <button>I'm bored</button>
+        <button onClick={ () => this.handleHungryClick() }>Im hungry</button>
+        <button>Eat with Friends</button>
+      </div>
+        <br/>
+      <div>
       </div>
     </div>
     );

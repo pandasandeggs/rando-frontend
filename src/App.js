@@ -5,8 +5,8 @@ import Home from './Components/Home'
 import Signup from './Components/Signup'
 import Login from './Components/Login'
 import RandomRestaurantPage from './Components/RandomRestaurantPage'
-import RandomActivityPage from './Components/RandomActivityPage'
-
+import RestaurantList from './Components/RestaurantList'
+import NavBar from './Components/NavBar'
 class App extends Component {
 
   constructor(){
@@ -20,7 +20,7 @@ class App extends Component {
       showLogin: localStorage.token ? false : true,
       showHome: localStorage.token ? true : false,
       showRestaurantPage: false,
-      showActivityPage: false,
+      showRestaurantList: false,
       currentRestaurant: null
     }
   }
@@ -105,7 +105,6 @@ class App extends Component {
 
 /* Grabs a random restaurant for the user from their list of restaurants */
   getRandomRestaurant = () => {
-    console.log("I hit the get random restaurant function")
     const token = localStorage.token
     if(token){
       fetch('http://localhost:3000/api/v1/restaurants/random', {
@@ -134,20 +133,20 @@ class App extends Component {
   }
 /* Directs user to the correct page */
   currentPage = () => {
-    const { currentUser, restaurants, activities, friends, showSignup, showLogin, showHome, showRestaurantPage, showActivityPage, currentRestaurant } = this.state;
+    const { currentUser, restaurants, activities, friends, showSignup, showLogin, showHome, showRestaurantPage, showRestaurantList, currentRestaurant } = this.state;
     if(showSignup === true){
       return <Signup currentUser={currentUser} signup={this.signup} getLogin={this.getLogin}/>
     } else if(showLogin === true){
       return <Login currentUser={currentUser} login={this.login} getSignup={this.getSignup}/>
     } else if(showHome === true){
-      return <Home currentUser={currentUser} randomRestaurant={this.getRandomRestaurant} randomActivity={this.getRandomActivity}/>
+      return <div><Home currentUser={currentUser} randomRestaurant={this.getRandomRestaurant}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} logout={this.logout}/></div>
     } else if(showRestaurantPage === true){
-      return <RandomRestaurantPage currentUser={currentUser} restaurants={restaurants} currentRestaurant={currentRestaurant}/>
-    } else if(showActivityPage === true){
-      return <RandomActivityPage currentUser={currentUser} activities={activities}/>
+      return <div><RandomRestaurantPage currentUser={currentUser} restaurants={restaurants} currentRestaurant={currentRestaurant} getHome={this.getHome} randomRestaurant={this.getRandomRestaurant}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} logout={this.logout}/></div>
+    } else if(showRestaurantList === true){
+      return <div><RestaurantList currentUser={currentUser} getHome={this.getHome}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} logout={this.logout}/></div>
     }
   }
-
+/* Page Switching Functions */
   getSignup = () => {
     this.setState({
       showSignup: true,
@@ -160,6 +159,33 @@ class App extends Component {
     this.setState({
       showSignup: false,
       showLogin: true,
+      showHome: false
+    })
+  }
+
+  getHome = () => {
+    this.setState({
+      showRestaurantPage: false,
+      showRestaurantList: false,
+      showHome: true
+    })
+  }
+
+  getRestaurantList = () => {
+    this.setState({
+      showRestaurantPage: false,
+      showRestaurantList: true,
+      showHome: false
+    })
+  }
+
+  logout = () => {
+    localStorage.clear()
+    this.setState({
+      showSignup: true,
+      showLogin: false,
+      showRestaurantPage: false,
+      showRestaurantList: false,
       showHome: false
     })
   }
