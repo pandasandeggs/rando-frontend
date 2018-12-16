@@ -8,7 +8,7 @@ class NavBar extends Component{
   }
 
   handleProfileClick = () => {
-
+    this.props.getProfile()
   }
 
   handleRestaurantClick = () => {

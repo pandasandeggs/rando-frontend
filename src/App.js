@@ -7,6 +7,8 @@ import Login from './Components/Login'
 import RandomRestaurantPage from './Components/RandomRestaurantPage'
 import RestaurantList from './Components/RestaurantList'
 import NavBar from './Components/NavBar'
+import Profile from './Components/Profile'
+
 class App extends Component {
 
   constructor(){
@@ -21,6 +23,7 @@ class App extends Component {
       showHome: localStorage.token ? true : false,
       showRestaurantPage: false,
       showRestaurantList: false,
+      showProfile: false,
       currentRestaurant: null
     }
   }
@@ -133,17 +136,19 @@ class App extends Component {
   }
 /* Directs user to the correct page */
   currentPage = () => {
-    const { currentUser, restaurants, activities, friends, showSignup, showLogin, showHome, showRestaurantPage, showRestaurantList, currentRestaurant } = this.state;
+    const { currentUser, restaurants, activities, friends, showSignup, showLogin, showHome, showRestaurantPage, showRestaurantList, currentRestaurant, showProfile} = this.state;
     if(showSignup === true){
       return <Signup currentUser={currentUser} signup={this.signup} getLogin={this.getLogin}/>
     } else if(showLogin === true){
       return <Login currentUser={currentUser} login={this.login} getSignup={this.getSignup}/>
     } else if(showHome === true){
-      return <div><Home currentUser={currentUser} randomRestaurant={this.getRandomRestaurant}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} logout={this.logout}/></div>
+      return <div><Home currentUser={currentUser} randomRestaurant={this.getRandomRestaurant}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} getProfile={this.getProfile} logout={this.logout}/></div>
     } else if(showRestaurantPage === true){
-      return <div><RandomRestaurantPage currentUser={currentUser} restaurants={restaurants} currentRestaurant={currentRestaurant} getHome={this.getHome} randomRestaurant={this.getRandomRestaurant}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} logout={this.logout}/></div>
+      return <div><RandomRestaurantPage currentUser={currentUser} restaurants={restaurants} currentRestaurant={currentRestaurant} getHome={this.getHome} randomRestaurant={this.getRandomRestaurant}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} getProfile={this.getProfile} logout={this.logout}/></div>
     } else if(showRestaurantList === true){
-      return <div><RestaurantList currentUser={currentUser} getHome={this.getHome}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} logout={this.logout}/></div>
+      return <div><RestaurantList currentUser={currentUser} getHome={this.getHome}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} getProfile={this.getProfile} logout={this.logout}/></div>
+    } else if(showProfile === true){
+      return <div><Profile currentUser={currentUser} getHome={this.getHome}/><NavBar getHome={this.getHome} getRestaurantList={this.getRestaurantList} getProfile={this.getProfile} logout={this.logout}/></div>
     }
   }
 /* Page Switching Functions */
@@ -167,6 +172,7 @@ class App extends Component {
     this.setState({
       showRestaurantPage: false,
       showRestaurantList: false,
+      showProfile: false,
       showHome: true
     })
   }
@@ -175,6 +181,16 @@ class App extends Component {
     this.setState({
       showRestaurantPage: false,
       showRestaurantList: true,
+      showProfile: false,
+      showHome: false
+    })
+  }
+
+  getProfile = () => {
+    this.setState({
+      showRestaurantPage: false,
+      showRestaurantList: false,
+      showProfile: true,
       showHome: false
     })
   }
@@ -186,12 +202,12 @@ class App extends Component {
       showLogin: false,
       showRestaurantPage: false,
       showRestaurantList: false,
+      showProfile: false,
       showHome: false
     })
   }
 
   render() {
-    const { currentUser, restaurants, activities, friends, showSignup, showLogin, showHome } = this.state;
     return (
       <div>
         { this.currentPage() }
