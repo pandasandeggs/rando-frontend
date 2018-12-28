@@ -16,7 +16,7 @@ class NavBar extends Component{
   }
 
   handleFriendsClick = () => {
-
+    this.props.getFriendsPage()
   }
 
   handleLogout = () => {
@@ -29,7 +29,7 @@ class NavBar extends Component{
         <button onClick={ () => this.handleHomeClick() }>Home</button>
         <button onClick={ () => this.handleProfileClick() }>Profile</button>
         <button onClick={ () => this.handleRestaurantClick() }>Restaurants</button>
-        <button onClick={ () => this.handleFriendClick() }>Friends</button>
+        <button onClick={ () => this.handleFriendsClick() }>Friends</button>
         <button onClick={ () => this.handleLogout() }>Logout</button>
       </div>
     )

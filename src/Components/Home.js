@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-import NavBar from './NavBar'
 
 class Home extends Component {
 
@@ -20,6 +19,10 @@ class Home extends Component {
     this.props.restaurantList()
   }
 
+  handleEatWithFriendsClick = () => {
+    this.props.getEatWithFriendsPage()
+  }
+
   render() {
     return (
     <div>
@@ -29,7 +32,7 @@ class Home extends Component {
       <p>How are you?</p>
       <div>
         <button onClick={ () => this.handleHungryClick() }>Im hungry</button>
-        <button>Eat with Friends</button>
+        <button onClick={ () => this.handleEatWithFriendsClick() }>Eat with Friends</button>
       </div>
         <br/>
       <div>
